@@ -3,6 +3,13 @@ import requests
 import configuration
 import data
 
+# Функция для получения данных из таблицы пользователей
+def get_users_table():
+    # Составление полного URL пути к данным таблицы пользователей
+    # путем конкатенации базового URL сервиса и конечной точки таблицы пользователей
+    # Возвращает объект ответа от сервера
+    return requests.get(configuration.URL_SERVICE + configuration.USERS_TABLE_PATH)
+
 # Определение функции post_new_user для отправки POST-запроса на создание нового пользователя
 def post_new_user(body):
     # Выполнение POST-запроса с использованием URL из конфигурационного файла, тела запроса и заголовков
@@ -12,10 +19,3 @@ def post_new_user(body):
     return requests.post(configuration.URL_SERVICE + configuration.CREATE_USER_PATH,
                          json=body,
                          headers=data.headers)
-
-# Вызов функции post_new_user с телом запроса для создания нового пользователя из модуля data
-response = post_new_user(data.user_body)
-
-# Вывод HTTP-статус кода ответа на запрос
-# Код состояния указывает на результат обработки запроса сервером
-print(response.status_code)
